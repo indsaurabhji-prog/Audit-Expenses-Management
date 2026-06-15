@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Expenses Management</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-slate-900 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <i data-lucide="calculator" class="w-8 h-8 text-blue-400"></i>
+                <span class="text-xl font-bold tracking-tight">Audit Expenses Management</span>
+            </div>
+            <div class="text-sm text-slate-400 bg-slate-800 px-3 py-1 rounded-full flex items-center space-x-1">
+                <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+                <span>Secure Local Storage</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <!-- Dashboard / Overview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-slate-500 uppercase">Total Expenses</p>
+                    <h3 id="total-amount" class="text-3xl font-bold text-slate-900 mt-1">₹0.00</h3>
+                </div>
+                <div class="p-3 bg-blue-50 text-blue-600 rounded-lg">
+                    <i data-lucide="wallet" class="w-6 h-6"></i>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-slate-500 uppercase">Travel</p>
+                    <h3 id="total-travel" class="text-2xl font-bold text-slate-900 mt-1">₹0.00</h3>
+                </div>
+                <div class="p-3 bg-amber-50 text-amber-600 rounded-lg">
+                    <i data-lucide="car" class="w-6 h-6"></i>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-slate-500 uppercase">Hotel Rent</p>
+                    <h3 id="total-hotel" class="text-2xl font-bold text-slate-900 mt-1">₹0.00</h3>
+                </div>
+                <div class="p-3 bg-indigo-50 text-indigo-600 rounded-lg">
+                    <i data-lucide="hotel" class="w-6 h-6"></i>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-slate-500 uppercase">Food & Audit</p>
+                    <h3 id="total-food-audit" class="text-2xl font-bold text-slate-900 mt-1">₹0.00</h3>
+                </div>
+                <div class="p-3 bg-emerald-50 text-emerald-600 rounded-lg">
+                    <i data-lucide="utensils" class="w-6 h-6"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Side: Add Expense Form -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-fit">
+                <h2 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                    <i data-lucide="plus-circle" class="w-5 h-5 text-blue-500"></i>
+                    <span>Log New Expense</span>
+                </h2>
+                <form id="expense-form" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Date</label>
+                            <input type="date" id="exp-date" required class="w-full rounded-lg border-slate-200 border p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Division</label>
+                            <select id="exp-division" class="w-full rounded-lg border-slate-200 border p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                                <option value="TVS">TVS</option>
+                                <option value="TATA">TATA</option>
+                                <option value="MOPL">MOPL</option>
+                                <option value="REYMOND">REYMOND</option>
+                                <option value="BAJAJ">BAJAJ</option>
+                                <option value="RELIANCE">RELIANCE</option>
+                                <option value="JOCKEY">JOCKEY</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Location / Site City</label>
+                        <input type="text" id="exp-location" placeholder="e.g., Mau, Delhi, Mumbai" required class="w-full rounded-lg border-slate-200 border p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Expense Title / Description</label>
+                        <input type="text" id="exp-title" placeholder="e.g., Taxi to Client Store, Dinner" required class="w-full rounded-lg border-slate-200 border p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Category</label>
+                            <select id="exp-category" class="w-full rounded-lg border-slate-200 border p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                                <option value="Travel">🚗 Travel</option>
+                                <option value="Hotel Rent">🏨 Hotel Rent</option>
+                                <option value="Food">🍔 Food & Meals</option>
+                                <option value="Audit Expenses">📋 Audit Misc</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Amount (₹)</label>
+                            <input type="number" id="exp-amount" min="1" step="any" placeholder="0.00" required class="w-full rounded-lg border-slate-200 border p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Attach Invoice / Bill (Image or PDF)</label>
+                        <input type="file" id="exp-invoice" accept="image/*,.pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-slate-200 rounded-lg p-1.5 focus:outline-none">
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition dynamic shadow-sm">
+                        Add Expense
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Side: Expense Log Table -->
+            <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
+                <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center space-x-2">
+                        <i data-lucide="list" class="w-5 h-5 text-blue-500"></i>
+                        <span>Expense Log</span>
+                    </h2>
+                    <div class="flex items-center space-x-3 self-end sm:self-auto">
+                        <button id="export-excel" class="text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg font-semibold border border-emerald-200 flex items-center space-x-1 transition">
+                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                            <span>Export CSV</span>
+                        </button>
+                        <button id="clear-all" class="text-xs bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1.5 rounded-lg font-semibold border border-red-200 flex items-center space-x-1 transition">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            <span>Clear All</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto flex-grow">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 text-xs font-semibold uppercase border-b border-slate-100">
+                                <th class="py-3 px-4">Date</th>
+                                <th class="py-3 px-4">Division</th>
+                                <th class="py-3 px-4">Location</th>
+                                <th class="py-3 px-4">Description</th>
+                                <th class="py-3 px-4">Category</th>
+                                <th class="py-3 px-4 text-center">Invoice</th>
+                                <th class="py-3 px-4 text-right">Amount</th>
+                                <th class="py-3 px-4 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expense-list" class="divide-y divide-slate-100 text-xs text-slate-700">
+                            <!-- Dynamic rows go here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript logic -->
+    <script>
+        const expenseForm = document.getElementById('expense-form');
+        const expenseList = document.getElementById('expense-list');
+        const totalAmountEl = document.getElementById('total-amount');
+        const totalTravelEl = document.getElementById('total-travel');
+        const totalHotelEl = document.getElementById('total-hotel');
+        const totalFoodAuditEl = document.getElementById('total-food-audit');
+        const clearAllBtn = document.getElementById('clear-all');
+        const exportExcelBtn = document.getElementById('export-excel');
+
+        document.getElementById('exp-date').valueAsDate = new Date();
+
+        let expenses = JSON.parse(localStorage.getItem('audit_expenses_v3')) || [];
+
+        function init() {
+            lucide.createIcons();
+            renderExpenses();
+            updateCalculations();
+        }
+
+        function renderExpenses() {
+            expenseList.innerHTML = '';
+            
+            if (expenses.length === 0) {
+                expenseList.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-8 text-slate-400 text-sm">
+                            No expenses logged yet. Start by adding one on the left!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            expenses.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            expenses.forEach((expense) => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-slate-50 transition';
+                
+                const formattedDate = new Date(expense.date).toLocaleDateString('en-IN', {
+                    day: '2-digit', month: 'short'
+                });
+
+                let badgeClass = 'bg-slate-100 text-slate-700';
+                if (expense.category === 'Travel') badgeClass = 'bg-amber-100 text-amber-800';
+                if (expense.category === 'Hotel Rent') badgeClass = 'bg-indigo-100 text-indigo-800';
+                if (expense.category === 'Food') badgeClass = 'bg-emerald-100 text-emerald-800';
+                if (expense.category === 'Audit Expenses') badgeClass = 'bg-blue-100 text-blue-800';
+
+                let invoiceBtn = '<span class="text-slate-400">—</span>';
+                if (expense.invoiceData) {
+                    invoiceBtn = `
+                        <button onclick="viewInvoice('${expense.id}')" class="text-blue-600 hover:text-blue-800 inline-flex items-center space-x-1 font-semibold bg-blue-50 px-2 py-0.5 rounded border border-blue-100 transition">
+                            <i data-lucide="eye" class="w-3 h-3"></i>
+                            <span>View</span>
+                        </button>
+                    `;
+                }
+
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-medium whitespace-nowrap">${formattedDate}</td>
+                    <td class="py-3 px-4 font-bold text-slate-900">${expense.division || '—'}</td>
+                    <td class="py-3 px-4 truncate max-w-[100px] font-medium">${expense.location || '—'}</td>
+                    <td class="py-3 px-4 max-w-[150px] truncate font-medium text-slate-900">${expense.title}</td>
+                    <td class="py-3 px-4 whitespace-nowrap"><span class="px-2 py-0.5 rounded-full text-[10px] font-semibold ${badgeClass}">${expense.category}</span></td>
+                    <td class="py-3 px-4 text-center whitespace-nowrap">${invoiceBtn}</td>
+                    <td class="py-3 px-4 text-right font-bold text-slate-900">₹${parseFloat(expense.amount).toFixed(2)}</td>
+                    <td class="py-3 px-4 text-center whitespace-nowrap">
+                        <button onclick="deleteExpense('${expense.id}')" class="text-slate-400 hover:text-red-500 transition p-1">
+                            <i data-lucide="trash" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </td>
+                `;
+                expenseList.appendChild(row);
+            });
+            lucide.createIcons();
+        }
+
+        function updateCalculations() {
+            let total = 0;
+            let travel = 0;
+            let hotel = 0;
+            let foodAudit = 0;
+
+            expenses.forEach(exp => {
+                const amt = parseFloat(exp.amount);
+                total += amt;
+                if (exp.category === 'Travel') travel += amt;
+                else if (exp.category === 'Hotel Rent') hotel += amt;
+                else if (exp.category === 'Food' || exp.category === 'Audit Expenses') foodAudit += amt;
+            });
+
+            totalAmountEl.innerText = `₹${total.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+            totalTravelEl.innerText = `₹${travel.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+            totalHotelEl.innerText = `₹${hotel.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+            totalFoodAuditEl.innerText = `₹${foodAudit.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+        }
+
+        expenseForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const fileInput = document.getElementById('exp-invoice');
+            const file = fileInput.files[0];
+
+            const saveExpense = (base64Data = null, fileName = null, fileType = null) => {
+                const newExpense = {
+                    id: Date.now().toString(),
+                    date: document.getElementById('exp-date').value,
+                    division: document.getElementById('exp-division').value,
+                    location: document.getElementById('exp-location').value.trim(),
+                    title: document.getElementById('exp-title').value.trim(),
+                    category: document.getElementById('exp-category').value,
+                    amount: document.getElementById('exp-amount').value,
+                    invoiceData: base64Data,
+                    invoiceName: fileName,
+                    invoiceType: fileType
+                };
+
+                expenses.push(newExpense);
+                try {
+                    localStorage.setItem('audit_expenses_v3', JSON.stringify(expenses));
+                } catch (error) {
+                    alert('Storage limit reached! Try clearing old history or using smaller attachment file sizes.');
+                }
+                
+                document.getElementById('exp-title').value = '';
+                document.getElementById('exp-location').value = '';
+                document.getElementById('exp-amount').value = '';
+                fileInput.value = '';
+
+                renderExpenses();
+                updateCalculations();
+            };
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    saveExpense(event.target.result, file.name, file.type);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                saveExpense();
+            }
+        });
+
+        window.viewInvoice = function(id) {
+            const item = expenses.find(exp => exp.id === id);
+            if (!item || !item.invoiceData) return;
+
+            const newWindow = window.open();
+            if (item.invoiceType.includes('pdf')) {
+                newWindow.document.write(`<iframe src="${item.invoiceData}" style="width:100%; height:100vh; border:none;"></iframe>`);
+            } else {
+                newWindow.document.write(`
+                    <div style="background:#f1f5f9; min-height:100vh; display:flex; justify-content:center; align-items:center; font-family:sans-serif; flex-direction:column; padding:20px;">
+                        <p style="margin-bottom:15px; color:#334155; font-weight:600;">${item.invoiceName}</p>
+                        <img src="${item.invoiceData}" style="max-width:100%; max-height:85vh; border-radius:8px; box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1);">
+                    </div>
+                `);
+            }
+        };
+
+        function deleteExpense(id) {
+            expenses = expenses.filter(exp => exp.id !== id);
+            localStorage.setItem('audit_expenses_v3', JSON.stringify(expenses));
+            renderExpenses();
+            updateCalculations();
+        }
+
+        clearAllBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear all log history?')) {
+                expenses = [];
+                localStorage.removeItem('audit_expenses_v3');
+                renderExpenses();
+                updateCalculations();
+            }
+        });
+
+        exportExcelBtn.addEventListener('click', () => {
+            if (expenses.length === 0) {
+                alert('No data available to export.');
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Date,Division,Location,Description,Category,Amount (INR),Has Invoice Attachment?\n";
+
+            expenses.forEach(exp => {
+                const safeTitle = exp.title.replace(/"/g, '""');
+                const safeLocation = exp.location.replace(/"/g, '""');
+                const hasInvoice = exp.invoiceData ? 'Yes' : 'No';
+                csvContent += `"${exp.date}","${exp.division}","${safeLocation}","${safeTitle}","${exp.category}","${parseFloat(exp.amount).toFixed(2)}","${hasInvoice}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', `audit-expenses-${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        init();
+    </script>
+</body>
+</html>
